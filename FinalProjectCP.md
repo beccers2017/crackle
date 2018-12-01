@@ -34,7 +34,7 @@ FinalProjectCP
 	have any reason to change this, and feel as if I am still on track to accomplish
 	this goal. 
 
-4. Screenshots of where your app/program is currently at. 
+4. Screenshots of where your app/program is currently at.<br/>
    	I cannot figure out how to embed screenshots into a .md file, but I do have screenshots
    	in the screenshot folder that give an image of where my program is at, at this point
    	in time.
