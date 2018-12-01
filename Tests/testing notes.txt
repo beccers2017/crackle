@@ -1,0 +1,23 @@
+Enter a string to be hashed
+password
+The given input was: 
+MD5 digest: 5f4dcc3b5aa765d61d8327deb882cf99
+Online Generator: Matched
+
+Enter a string to be hashed
+password
+The given input was: password
+SHA1 digest: 5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8
+Online Generator: Matched
+
+Enter a string to be hashed
+password
+The given input was: password
+SHA256 digest:    5e884898da28047151d0e56f8dc6292773603d0d
+Online Generator: 5e884898da28047151d0e56f8dc6292773603d0d 6aabbdd62a11ef721d1542d8
+
+Enter a string to be hashed
+password
+The given input was: password
+SHA512 digest:    b109f3bbbc244eb82441917ed06d618b9008dd09
+Online Generator: b109f3bbbc244eb82441917ed06d618b9008dd09 b3befd1b5e07394C706a8bb980b1d7785e5976eC049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86
