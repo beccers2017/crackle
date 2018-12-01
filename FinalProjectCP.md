@@ -37,3 +37,4 @@ FinalProjectCP
 4. Screenshots of where your app/program is currently at. 
    ![Alt text](/crackle/Screenshots/UserInterface.png?raw=true "User Interface")
    ![Alt text](/crackle/Screenshots/DictionaryAttack.png?raw=true "Dictonary Attack")
+   ![Screenshot](/crackle/Screenshots/UserInterface.png?raw=true "User Interface")
