@@ -17,20 +17,22 @@
 #include <openssl/sha.h>
 
 //using namespace boost::timer;
-/**
-DictionaryAttack::DictionaryAttack() {
-	//default constructor
-}
-*/
-DictionaryAttack::DictionaryAttack(std::string givenHash) {
-	hash = givenHash;
-}
 
+/**
+ * 
+ * @param
+ * @param
+ * @return
+ */
+
+DictionaryAttack::DictionaryAttack(std::string givenHash, std::string hash_Type) {
+	hash = givenHash;
+	hashType = hash_Type;
+}
 
 /**
  * [DictionaryAttack::LoadDictionary description]
  * @param  filename [description]
- * @param  hashType [description]
  * @return          [description]
  */
 bool DictionaryAttack::loadDictionary(std::string filename) {
@@ -49,15 +51,9 @@ bool DictionaryAttack::loadDictionary(std::string filename) {
 	}
 	else {
 		std::cout << "The dictionary file was loaded successfully" << std::endl;
-		launchDictionaryAttack(file,hash);
+		launchDictionaryAttack(&file,hashType);
 		
-		/**
-		while(getline(file,line))
-			if(!line.empty()) {
-				attempts++;
-				launchDictionaryAttack(line,hashType);
-			}
-	}
+	/**
 	file.close();
 	*/
 	return true;
@@ -66,24 +62,33 @@ bool DictionaryAttack::loadDictionary(std::string filename) {
 
 /**
  * [DictionaryAttack::launchDictionaryAttack description]
- * @param line     [description]
+ * @param filename     [description]
  * @param hashType [description]
  */
-void DictionaryAttack::launchDictionaryAttack(std::ifstream &filename, std::string &hashType) {
+void DictionaryAttack::launchDictionaryAttack(std::ifstream *filename, std::string &hashType) {
 	std::string line;
 	int lineCount = 0;
 	
 	std::cout << "Launching Dictionary Attack" << std::endl;
 	
-	while(std::getline(filename,line)) {
-		if(!line.empty()) {
-			lineCount++;
+	while(!filename->eof()) {
+		*filename >> line;
+		lineCount++;
 	
 			std::string DictionaryHash;
-		
+			
+			//debugging line
+			std::cout << "The hashType is: " << hashType << std::endl;
+			
 			if(hashType == "MD5") {
-				DictionaryHash = this->calculateHash_MD5(line);
-				this->compareHashes(DictionaryHash, line);
+				//both calculateHash_MD5 and compareHashes need to be in a loop to keep running through the dictionary
+				
+				DictionaryHash = calculateHash_MD5(line);
+				//debugging line
+				std::cout << "The dictionaryHash is: " << DictionaryHash << std::endl;
+				
+				//need to save the return value of compareHashes in a variable to be able to use the if statement
+				compareHashes(DictionaryHash, line);
 				if(true)
 					//return 0;
 					exit(0);
@@ -102,14 +107,17 @@ void DictionaryAttack::launchDictionaryAttack(std::ifstream &filename, std::stri
 					//return 0;
 					exit(0);
 			}
-			else {
+			else if(hashType == "SHA512") {
 				DictionaryHash = calculateHash_SHA512(line);
 				compareHashes(DictionaryHash, line);
 				if(true)
 					//return 0;
 					exit(0);
 			}
-		}
+			else {
+				std::cout << "Error: No hash type specified" << std::endl;
+				break;
+			}
 	}
 }
 
@@ -127,7 +135,7 @@ std::string DictionaryAttack::calculateHash_MD5(std::string input) {
 	for(int i = 0; i < MD5_DIGEST_LENGTH; i++) {
 		sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
 	}
-	printf("MD5 digest: %s\n", mdString);
+	//printf("MD5 digest: %s\n", mdString);
 	return mdString;
 }
 
@@ -145,7 +153,7 @@ std::string DictionaryAttack::calculateHash_SHA1(std::string input) {
 	for(int i = 0; i < SHA_DIGEST_LENGTH; i++) {
 		sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
 	}
-	printf("SHA1 digest: %s\n", mdString);
+	//printf("SHA1 digest: %s\n", mdString);
 	return mdString;
 }
 
@@ -163,7 +171,7 @@ std::string DictionaryAttack::calculateHash_SHA256(std::string input) {
 	for(int i = 0; i < SHA_DIGEST_LENGTH; i++) {
 		sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
 	}
-	printf("SHA256 digest: %s\n", mdString);
+	//printf("SHA256 digest: %s\n", mdString);
 	return mdString;
 }
 
@@ -181,30 +189,14 @@ std::string DictionaryAttack::calculateHash_SHA512(std::string input) {
 	for(int i = 0; i < SHA_DIGEST_LENGTH; i++) {
 		sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
 	}
-	printf("SHA512 digest: %s\n", mdString);
+	//printf("SHA512 digest: %s\n", mdString);
 	return mdString;
 }
-/**
-void setLine(std::string line) {
-	
-}
-
-void setLineCount(int lineCount) {
-	
-}
-
-std::string getLine() const {
-	
-}
-
-int getLineCount() const {
-	
-}
-
 
 /**
  * [DictionaryAttack::compareHashes description]
  * @param std::DictionaryHash [description]
+ * @param line
  */
 bool DictionaryAttack::compareHashes(std::string DictionaryHash, std::string line) {
 	if(DictionaryHash == hash) {
@@ -217,9 +209,3 @@ bool DictionaryAttack::compareHashes(std::string DictionaryHash, std::string lin
 		return false;
 	}
 }
-
-/**
- * Make separate function that just loads the file, not load and read. Reading
- * file should be made into its own funciton so that it can be called to read each
- * line if the hashes don't match
- */

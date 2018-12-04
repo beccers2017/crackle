@@ -2,6 +2,8 @@
 #include <string>
 #include "DictionaryAttack.h"
 
+//add a instruction to enter hash type as all capital letters or add a check that will take it as lower case letters, and maybe convert to all upper case letters
+
 bool validateHashType(std::string &hashType) {
 	if(hashType == "MD5" || hashType == "SHA1" || hashType == "SHA256" || hashType == "SHA512") {
 		return true;
@@ -14,22 +16,23 @@ bool validateHashType(std::string &hashType) {
 
 int main() {
 	std::string filename;
-	filename = "parsedWordlist.txt";
+	//filename = "parsedWordlist.txt";
+	filename = "smallWordlist.txt";
 	
 	std::string uHash;
 	std::cout << "Enter a hash: " << std::endl;
 	std::cin >> uHash;
 	
-	std::string hashType;
+	std::string hash_Type;
 	std::cout << "Enter a hash type: " << std::endl;
-	std::cin >> hashType;
-	validateHashType(hashType);
+	std::cin >> hash_Type;
+	validateHashType(hash_Type);
 	if(false) {
 		std::cout << "Wrong hash type entered" << std::endl;
 		return 0;
 	}
 	
-	DictionaryAttack d(uHash);
+	DictionaryAttack d(uHash, hash_Type);
 	d.loadDictionary(filename);
 	//d.launchDictionaryAttack(filename, hashType);
 	

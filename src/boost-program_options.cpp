@@ -44,8 +44,11 @@ void UserInterface::printHelp() {
 void process_program_options(const int argc, const char *const argv[]) {
 	po::options_description desc("Options");
 	desc.add_options()
-		("help", "Show help message")
-		("version", "Show version number")
+		("help, h", "Show help message")
+		("version, v", "Show version number")
+		("user-name, u", "Give a user name for brute-force attack") //need to add middle value
+		("hash-type, t", "Enter the type of the hash entered") //need to add middle value
+		
 	;
 	
 	po::variables_map vm;
