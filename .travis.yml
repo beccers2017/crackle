@@ -1,0 +1,19 @@
+language: cpp
+before_script: 
+
+compiler:
+  -gcc
+
+os:
+  -linux
+
+before_install:
+  
+script:
+  
+  
+./configure && make && make test
+  
+env:
+  global:
+    -LANG="en_US.UTF-8"

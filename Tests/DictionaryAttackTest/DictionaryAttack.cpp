@@ -73,15 +73,19 @@ void DictionaryAttack::launchDictionaryAttack(std::ifstream *filename, std::stri
 	
 	while(!filename->eof()) {
 		*filename >> line;
+		
+		//debugging line
+		std::cout << line << std::endl;
 		lineCount++;
 	
 			std::string DictionaryHash;
 			
 			//debugging line
-			std::cout << "The hashType is: " << hashType << std::endl;
+			//std::cout << "The hashType is: " << hashType << std::endl;
 			
 			if(hashType == "MD5") {
 				//both calculateHash_MD5 and compareHashes need to be in a loop to keep running through the dictionary
+				std::cout << line << std::endl;
 				
 				DictionaryHash = calculateHash_MD5(line);
 				//debugging line

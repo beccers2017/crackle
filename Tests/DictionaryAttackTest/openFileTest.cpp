@@ -13,6 +13,8 @@ int fileLoadRead(string filename) {
 	if(myFile.is_open()) {
 		while(!myFile.eof()) {
 			myFile >> line;
+			//testing line
+			cout << line << endl;
 			count++;
 		}
 		myFile.close();
@@ -27,6 +29,7 @@ int fileLoadRead(string filename) {
 }
 
 int main() {
-	string filename = "parsedWordlist.txt";
+	//string filename = "parsedWordlist.txt";
+	string filename = "smallWordlist.txt";
 	fileLoadRead(filename);
 }
