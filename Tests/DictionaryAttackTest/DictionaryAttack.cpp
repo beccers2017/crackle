@@ -53,10 +53,10 @@ bool DictionaryAttack::loadDictionary(std::string filename) {
 		std::cout << "The dictionary file was loaded successfully" << std::endl;
 		launchDictionaryAttack(&file,hashType);
 		
-	/**
-	file.close();
-	*/
-	return true;
+		/**
+		file.close();
+		*/
+		return true;
 	}
 }
 
@@ -140,6 +140,8 @@ std::string DictionaryAttack::calculateHash_MD5(std::string input) {
 		sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
 	}
 	//printf("MD5 digest: %s\n", mdString);
+	//debugging line
+	std::cout << mdString << std::endl;
 	return mdString;
 }
 

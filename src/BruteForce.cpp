@@ -4,39 +4,59 @@
  * @version 0.1.0
  */
 
-/**
- * Semantic versioning --most widely adopted version scheme, uses a sequence of three digits (Major.Minor.Patch)
- * an optional prerelease tag and optional build meta tag
- * 
- * Software using semantic versioning MUST declare a public API. This API can be declared in the code
- * itself or exist strictly in documentation.
- */
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
+#include <fstream>
 #include "BruteForce.h"
-#include <boost/chrono.hpp>
-#include <boost/timer.hpp>
+#include <chrono>
 #include <openssl/md5.h>
 #include <openssl/sha.h>
 
-
-using namespace boost::timer;
+using namespace std::chrono;
 
 static const char passChars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?@#$^&*";
 static const int passCharSize = 70;
 static const int maxPasswordSize = 8;
 
-BruteForce::BruteForce() {
-	//default constructor
-}
-
 BruteForce::BruteForce(std::string userName) {
 	user = userName;
 }
 
-void BruteForce::launchBruteForceAttack() {
-	//call validate hash?
+bool BruteForce::writeToFile(std::ofstream *filename) {
+	std::ofstream file;
+	file.open(filename);
+	if(!file.is_open()) {
+		std::cout << "The output file was unable to be loaded successfully." << std:: endl;
+		return false;
+	}
+	else {
+		std::cout << "The output file was loaded successfully." << std::endl;
+		auto start = high_resolution_clock::now();
+		launchBruteForceAttack(chars, passwordLength, current);
+		auto stop = high_resolution_clock::now();
+		auto duration = duration_cast<microseconds>(stop - start);
+		std::cout << "Time taken by the function: " << duration.count() << " microseconds" << std::endl;
+		/**
+		file.close();
+		*/
+		return true;
+	}
+}
+
+//could ask user to give a password length, instructing them that the length has to be <=8
+//first parameter will probably need to be editted to match passChars
+void BruteForce::launchBruteForceAttack(std::string const& chars, int passwordLength; std::string const& current) {
+	if(current.length() == passwordLength) {
+		return;
+	}
+	else {
+		for(auto c: chars) {
+			std::string next = current + c;
+			std::cout << next << std::endl;
+			launchBruteForceAttack(chars, passwordLength, next);
+		}
+	}
 }
 
 /**
@@ -57,6 +77,7 @@ bool BruteForce::validateHashType(std::string &hashType) {
 }
 */
 
+/**
 string BruteForce::BruteForceAttack(int maxAttempts) { //parameter maybe being the max number of attempts? or a timeout
 	auto_cpu_timer timer;
 	
@@ -93,16 +114,9 @@ string BruteForce::BruteForceAttack(int maxAttempts) { //parameter maybe being t
 		}
 	}
 }
+*/
 
-/**
- * [BruteForce::calculateHash_MD5 description]
- * MD5() computes the message digest of the n bytes at d 
- * and place it in md(which must have a space for 
- * MD5_DIGEST_LENGTH == 16 bytes of output). If md is 
- * NULL, the digest is placed in a static array
- * This function returns a pointer to the hash value
- */
-void BruteForce::calculateHash_MD5(std::string input) {
+std::string BruteForce::calculateHash_MD5(std::string input) {
 	unsigned char digest[MD5_DIGEST_LENGTH];
 	const char* std::string str = input.c_str();
 	
@@ -116,9 +130,10 @@ void BruteForce::calculateHash_MD5(std::string input) {
 		sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
 	}
 	printf("MD5 digest: %s\n", mdString);
+	return mdString;
 }
 
-void BruteForce::calculateHash_SHA1(std::string input) {
+std::string BruteForce::calculateHash_SHA1(std::string input) {
 	unsigned char digest[SHA_DIGEST_LENGTH];
 	const char* std::string str = input.c_str();
 	
@@ -132,9 +147,10 @@ void BruteForce::calculateHash_SHA1(std::string input) {
 		sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
 	}
 	printf("SHA1 digest: %s\n", mdString);
+	return mdString;
 }
 
-void BruteForce::calculateHash_SHA256(std::string input) {
+std::string BruteForce::calculateHash_SHA256(std::string input) {
 	unsigned char digest[SHA_DIGEST_LENGTH];
 	const char* std::string str = input.c_str();
 	
@@ -148,9 +164,10 @@ void BruteForce::calculateHash_SHA256(std::string input) {
 		sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
 	}
 	printf("SHA256 digest: %s\n", mdString);
+	return mdString;
 }
 
-void BruteForce::calculateHash_SHA512(std::string input) {
+std::string BruteForce::calculateHash_SHA512(std::string input) {
 	unsigned char digest[SHA_DIGEST_LENGTH];
 	const char* std::string str = input.c_str();
 
@@ -164,42 +181,10 @@ void BruteForce::calculateHash_SHA512(std::string input) {
 		sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
 	}
 	printf("SHA512 digest: %s\n", mdString);
+	return mdString;
 }
 
-/**
- * beginnings of functions used to measure time processes take 
- * NOTE: These are not in their intended location, these are just
- * here as I continue to develop the larger functions.
- */
 
-//Getting timepoint before the function is called
-using namespace std::chrono;
-auto start = high_resolution_clock::now();
-
-//getting timepoint after the function is called
-using namespace std::chrono;
-auto stop = high_resolution_clock::now();
-
-//get the difference in timepoints and cast it to required units
-auto duration = duration_cast<microseconds>(stop - start);
-std::cout << duration.count() << std::endl;
-
-/**
- * Sample brute force algorithm with recursion
- */
-
-void visit(std::string const& chars, size_t max_len, std::string const& cur) {
-	if(cur.length() == max_len) {
-		return;
-	}
-	else {
-		for(auto c : chars) {
-			std::string next = cur + c;
-			std::cout << next << std::endl;
-			visit(chars, max_len, next);
-		}
-	}
-}
 
 
 

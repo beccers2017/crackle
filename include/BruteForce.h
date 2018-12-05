@@ -11,14 +11,13 @@
 
 class BruteForce {
 	public:
-		BruteForce();
 		BruteForce(std::string userName);
-		bool validateHashType(std::string &hash);
-		std::string BruteForceAttack(int maxAttempts);
-		void calculateHash_MD5();
-		void calculateHash_SHA1();
-		void calculateHash_SHA256();
-		void calculateHash_SHA512();
+		bool writeToFile(std::ofstream *filename);
+		void launchBruteForceAttack(std::string const& chars, int passwordLength; std::string const& current);
+		std::string calculateHash_MD5(std::string input);
+		std::string calculateHash_SHA1(std::string input);
+		std::string calculateHash_SHA256(std::string input);
+		std::string calculateHash_SHA512(std::string input);
 	private:
 		std::string user;
 };
