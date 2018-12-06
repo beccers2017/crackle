@@ -51,7 +51,7 @@ bool DictionaryAttack::loadDictionary(std::string filename) {
 	}
 	else {
 		std::cout << "The dictionary file was loaded successfully" << std::endl;
-		launchDictionaryAttack(&file,hashType);
+		launchDictionaryAttack(&file, hashType);
 		
 		/**
 		file.close();
@@ -68,61 +68,106 @@ bool DictionaryAttack::loadDictionary(std::string filename) {
 void DictionaryAttack::launchDictionaryAttack(std::ifstream *filename, std::string &hashType) {
 	std::string line;
 	int lineCount = 0;
+	std::string dictionaryHash;
+	bool result;
+	
+	std::ifstream inFile;
+	std::string my_name = "smallWordlist.txt";
+	inFile.open(my_name.c_str());
 	
 	std::cout << "Launching Dictionary Attack" << std::endl;
 	
-	while(!filename->eof()) {
-		*filename >> line;
-		
-		//debugging line
-		std::cout << line << std::endl;
-		lineCount++;
-	
-			std::string DictionaryHash;
-			
+	// while(!filename->eof()) {
+	//while(filename->is_open()) {
+		if(hashType == "MD5") {
 			//debugging line
-			//std::cout << "The hashType is: " << hashType << std::endl;
+			std::cout << "Inside the MD5 if statement" << std::endl;
 			
-			if(hashType == "MD5") {
-				//both calculateHash_MD5 and compareHashes need to be in a loop to keep running through the dictionary
-				std::cout << line << std::endl;
+			//while(!filename->eof()) {
+			//while(*filename >> line) {
+			std::cout<<"getline"<<std::endl;
+			std::cin.ignore();
+			
+			if(inFile.fail()) {
+				std::cout<<"Some shit went down"<<std::endl;
+			} else {
 				
-				DictionaryHash = calculateHash_MD5(line);
+				while(std::getline(inFile, line, '\n')) {
+					// *filename >> line;
+					
+					//debugging line
+					std::cout << line << std::endl;
+					lineCount++;
+					
+					dictionaryHash = calculateHash_MD5(line);
+					
+					//debugging line
+					std::cout << "The dictionary hash is: " << dictionaryHash << std::endl;
+					
+					result = compareHashes(dictionaryHash, line);
+					if(result == true) {
+						exit(0);
+					}
+				}
+			}
+		}
+		else if(hashType == "SHA1") {
+			//while(!filename->eof()) {
+			while(*filename >> line) {
+				//*filename >> line;
 				//debugging line
-				std::cout << "The dictionaryHash is: " << DictionaryHash << std::endl;
+				std::cout << line << std::endl;
+				lineCount++;
+				dictionaryHash = calculateHash_SHA1(line);
+				//debugging line
+				std::cout << "The dictionary hash is: " << dictionaryHash << std::endl;
 				
-				//need to save the return value of compareHashes in a variable to be able to use the if statement
-				compareHashes(DictionaryHash, line);
-				if(true)
-					//return 0;
+				result = compareHashes(dictionaryHash, line);
+				if(result == true) {
 					exit(0);
+				}
 			}
-			else if(hashType == "SHA1") {
-				DictionaryHash = calculateHash_SHA1(line);
-				compareHashes(DictionaryHash, line);
-				if(true)
-					//return 0;
+		}
+		else if(hashType == "SHA256") {
+			//while(!filename->eof()) {
+			while(*filename >> line) {
+				//*filename >> line;
+				//debugging line
+				std::cout << line << std::endl;
+				lineCount++;
+				dictionaryHash = calculateHash_SHA256(line);
+				//debugging line
+				std::cout << "The dictionary hash is: " << dictionaryHash << std::endl;
+				
+				result = compareHashes(dictionaryHash, line);
+				if(result == true) {
 					exit(0);
+				}
 			}
-			else if(hashType == "SHA256") {
-				DictionaryHash = calculateHash_SHA256(line);
-				compareHashes(DictionaryHash, line);
-				if(true)
-					//return 0;
+		}
+		else if(hashType == "SHA512") {
+			//while(!filename->eof()) {
+			while(*filename >> line) {
+				//*filename >> line;
+				//debugging line
+				std::cout << line << std::endl;
+				lineCount++;
+				dictionaryHash = calculateHash_SHA512(line);
+				//debugging line
+				std::cout << "The dictionary hash is: " << dictionaryHash << std::endl;
+				
+				result = compareHashes(dictionaryHash, line);
+				if(result == true) {
 					exit(0);
+				}
 			}
-			else if(hashType == "SHA512") {
-				DictionaryHash = calculateHash_SHA512(line);
-				compareHashes(DictionaryHash, line);
-				if(true)
-					//return 0;
-					exit(0);
-			}
-			else {
-				std::cout << "Error: No hash type specified" << std::endl;
-				break;
-			}
-	}
+		}
+		else {
+			std::cout << "Error: No hash type specified" << std::endl;
+			//break;
+			exit(0);
+		}
+	// }
 }
 
 std::string DictionaryAttack::calculateHash_MD5(std::string input) {
@@ -139,9 +184,9 @@ std::string DictionaryAttack::calculateHash_MD5(std::string input) {
 	for(int i = 0; i < MD5_DIGEST_LENGTH; i++) {
 		sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
 	}
-	//printf("MD5 digest: %s\n", mdString);
+	printf("MD5 digest: %s\n", mdString);
 	//debugging line
-	std::cout << mdString << std::endl;
+	// std::cout << mdString << std::endl;
 	return mdString;
 }
 
@@ -204,8 +249,10 @@ std::string DictionaryAttack::calculateHash_SHA512(std::string input) {
  * @param std::DictionaryHash [description]
  * @param line
  */
-bool DictionaryAttack::compareHashes(std::string DictionaryHash, std::string line) {
-	if(DictionaryHash == hash) {
+bool DictionaryAttack::compareHashes(std::string dictionaryHash, std::string line) {
+	if(dictionaryHash == hash) {
+		//debugging line
+		std::cout << "Inside the compare Hashes Function" << std::endl;
 		std::cout << "This program has found a match for the given hash." << std::endl;
 		std::cout << "The matching password is: " << line << std::endl;
 		//std::cout << "This program read through " << lineCount << "lines" << std::endl;
