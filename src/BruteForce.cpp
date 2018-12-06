@@ -16,6 +16,7 @@
 using namespace std::chrono;
 
 static const char passChars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?@#$^&*";
+const char* passChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?@#$^&*";
 static const int passCharSize = 70;
 static const int maxPasswordSize = 8;
 
@@ -33,6 +34,7 @@ bool BruteForce::writeToFile(std::ofstream *filename) {
 	else {
 		std::cout << "The output file was loaded successfully." << std::endl;
 		auto start = high_resolution_clock::now();
+		
 		launchBruteForceAttack(chars, passwordLength, current);
 		auto stop = high_resolution_clock::now();
 		auto duration = duration_cast<microseconds>(stop - start);
