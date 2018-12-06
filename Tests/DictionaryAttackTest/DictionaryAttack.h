@@ -12,7 +12,6 @@
 
 class DictionaryAttack {
 	public:
-		//DictionaryAttack();
 		DictionaryAttack(std::string givenHash, std::string hash_Type);
 		bool loadDictionary(std::string filename);
 		void launchDictionaryAttack(std::ifstream *filename, std::string &hash);
@@ -22,11 +21,6 @@ class DictionaryAttack {
 		std::string calculateHash_SHA512(std::string input);
 		bool compareHashes(std::string dictionaryHash, std::string line);
 		
-	//	std::string getLine() const;
-	//	int getLineCount() const;
-		
-	//	void setLine(std::string line);
-	//	void setLineCount(int lineCount);
 	private:
 		std::string hash;
 		std::string hashType;

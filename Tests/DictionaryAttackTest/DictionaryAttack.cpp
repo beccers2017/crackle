@@ -9,20 +9,19 @@
 #include <fstream>
 #include <string>
 #include <cstring>
+#include <chrono>
 #include <stdio.h>
 #include "DictionaryAttack.h"
-//#include <boost/chrono.hpp>
-//#include <boost/timer.hpp>
 #include <openssl/md5.h>
 #include <openssl/sha.h>
 
-//using namespace boost::timer;
+using namespace std::chrono;
 
 /**
- * 
- * @param
- * @param
- * @return
+ * DictionaryAttack Constructor
+ * @param givenHash
+ * @param hash_type
+ * @return 
  */
 
 DictionaryAttack::DictionaryAttack(std::string givenHash, std::string hash_Type) {
@@ -77,35 +76,47 @@ void DictionaryAttack::launchDictionaryAttack(std::ifstream *filename, std::stri
 	
 	std::cout << "Launching Dictionary Attack" << std::endl;
 	
+	auto start = high_resolution_clock::now();
+	
 	// while(!filename->eof()) {
 	//while(filename->is_open()) {
 		if(hashType == "MD5") {
 			//debugging line
-			std::cout << "Inside the MD5 if statement" << std::endl;
+			//std::cout << "Inside the MD5 if statement" << std::endl;
 			
 			//while(!filename->eof()) {
 			//while(*filename >> line) {
-			std::cout<<"getline"<<std::endl;
+			
+			//debugging line
+			//std::cout << "getline" << std::endl;
 			std::cin.ignore();
 			
 			if(inFile.fail()) {
-				std::cout<<"Some shit went down"<<std::endl;
+				std::cout << "The file did not load properly." << std::endl;
 			} else {
-				
 				while(std::getline(inFile, line, '\n')) {
+				
 					// *filename >> line;
 					
 					//debugging line
-					std::cout << line << std::endl;
+					//std::cout << line << std::endl;
 					lineCount++;
 					
 					dictionaryHash = calculateHash_MD5(line);
+					std::cout << std::endl;
 					
 					//debugging line
-					std::cout << "The dictionary hash is: " << dictionaryHash << std::endl;
+					//std::cout << "The dictionary hash is: " << dictionaryHash << std::endl;
+					//std::cout << std::endl;
 					
 					result = compareHashes(dictionaryHash, line);
 					if(result == true) {
+						auto stop = high_resolution_clock::now();
+						auto duration = duration_cast<microseconds>(stop - start);
+						std::cout << std::endl;
+						std::cout << "The time taken by this program to find the password that matched the hash was: " << duration.count() << " microseconds" << std::endl;
+						std::cout << std::endl;
+						std::cout << "This program read through " << lineCount << " lines" << std::endl;
 						exit(0);
 					}
 				}
@@ -184,7 +195,7 @@ std::string DictionaryAttack::calculateHash_MD5(std::string input) {
 	for(int i = 0; i < MD5_DIGEST_LENGTH; i++) {
 		sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
 	}
-	printf("MD5 digest: %s\n", mdString);
+	//printf("MD5 digest: %s\n", mdString);
 	//debugging line
 	// std::cout << mdString << std::endl;
 	return mdString;
@@ -252,8 +263,9 @@ std::string DictionaryAttack::calculateHash_SHA512(std::string input) {
 bool DictionaryAttack::compareHashes(std::string dictionaryHash, std::string line) {
 	if(dictionaryHash == hash) {
 		//debugging line
-		std::cout << "Inside the compare Hashes Function" << std::endl;
+		//std::cout << "Inside the compare Hashes Function" << std::endl;
 		std::cout << "This program has found a match for the given hash." << std::endl;
+		std::cout << std::endl;
 		std::cout << "The matching password is: " << line << std::endl;
 		//std::cout << "This program read through " << lineCount << "lines" << std::endl;
 		return true;
