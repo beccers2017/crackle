@@ -7,6 +7,8 @@
 #include <iostream>
 #include <stdlib.h>
 #include "include/UserInterface.h"
+
+#include "termcolor/termcolor.hpp"
 //#include "BruteForce.h"
 //#include "DictionaryAttack.h"
 //#include <boost/program_options.hpp>
@@ -113,10 +115,10 @@ void UserInterface::menu() {
 	}
 }
 */
-/**
-void UserInterface::readConsoleInput() {
+
+void UserInterface::readConsoleInput(int argc, char *argv[]) {
 	
 }
-*/
+
 //clear screen function or keep this information displayed all the time -- maybe this is the purpose of print screen since it is currently unused
 //if something is missing print the help message

@@ -15,8 +15,9 @@
 
 using namespace std::chrono;
 
-static const char passChars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?@#$^&*";
-const char* passChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?@#$^&*";
+//static const char passChars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?@#$^&*";
+//const char* passChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?@#$^&*";
+const std::string passChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?@#$^&*";
 static const int passCharSize = 70;
 static const int maxPasswordSize = 8;
 
@@ -48,15 +49,15 @@ bool BruteForce::writeToFile(std::ofstream *filename) {
 
 //could ask user to give a password length, instructing them that the length has to be <=8
 //first parameter will probably need to be editted to match passChars
-void BruteForce::launchBruteForceAttack(std::string const& chars, int passwordLength; std::string const& current) {
+void BruteForce::launchBruteForceAttack(const std::string &passChars, int passwordLength; const std::string &current) {
 	if(current.length() == passwordLength) {
 		return;
 	}
 	else {
-		for(auto c: chars) {
+		for(auto c: passChars) {
 			std::string next = current + c;
 			std::cout << next << std::endl;
-			launchBruteForceAttack(chars, passwordLength, next);
+			launchBruteForceAttack(passChars, passwordLength, next);
 		}
 	}
 }

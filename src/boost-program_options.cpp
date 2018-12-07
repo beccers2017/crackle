@@ -79,6 +79,24 @@ void process_program_options(const int argc, const char *const argv[]) {
 	}
 }
 
+void walk_dirs(const std::vector<std::string>& dirs) {
+	size_t n_files(0);
+	for(const auto& dir : dirs) {
+		try {
+			auto walker = fs::recursive_directory_iterator(fs::path(dir));
+			for(const auto& entry:walker) {
+				if(fs::is_regular_file(entry)) {
+					n_files += 1;
+				}
+			}
+		}
+		catch(const std::exception& x) {
+			std::cerr << "Error accessing " << dir << "\n\t" << x.what() << '\n';
+		}
+	}
+	std::cout << n_files << " files\n";
+}
+
 int main(int argc, char *argv[]) {
 	process_program_options(argc, argv);
 	//return 0;
