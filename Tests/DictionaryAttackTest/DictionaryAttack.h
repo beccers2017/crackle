@@ -12,9 +12,9 @@
 
 class DictionaryAttack {
 	public:
-		DictionaryAttack(std::string givenHash, std::string hash_Type);
-		bool loadDictionary(std::string filename);
-		void launchDictionaryAttack(std::ifstream *filename, std::string &hash);
+		DictionaryAttack(std::string givenHash, std::string hash_type);
+		bool loadDictionary(std::string &filename);
+		void launchDictionaryAttack(std::ifstream &file);
 		std::string calculateHash_MD5(std::string input);
 		std::string calculateHash_SHA1(std::string input);
 		std::string calculateHash_SHA256(std::string input);

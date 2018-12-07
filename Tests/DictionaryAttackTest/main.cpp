@@ -23,16 +23,16 @@ int main() {
 	std::cout << "Enter a hash: " << std::endl;
 	std::cin >> uHash;
 	
-	std::string hash_Type;
+	std::string hash_type;
 	std::cout << "Enter a hash type: " << std::endl;
-	std::cin >> hash_Type;
-	validateHashType(hash_Type);
+	std::cin >> hash_type;
+	validateHashType(hash_type);
 	if(false) {
 		std::cout << "Wrong hash type entered" << std::endl;
 		return 0;
 	}
 	
-	DictionaryAttack d(uHash, hash_Type);
+	DictionaryAttack d(uHash, hash_type);
 	d.loadDictionary(filename);
 	//d.launchDictionaryAttack(filename, hashType);
 	

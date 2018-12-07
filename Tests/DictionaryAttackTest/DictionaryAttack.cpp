@@ -24,9 +24,9 @@ using namespace std::chrono;
  * @return 
  */
 
-DictionaryAttack::DictionaryAttack(std::string givenHash, std::string hash_Type) {
+DictionaryAttack::DictionaryAttack(std::string givenHash, std::string hash_type) {
 	hash = givenHash;
-	hashType = hash_Type;
+	hashType = hash_type;
 }
 
 /**
@@ -34,27 +34,23 @@ DictionaryAttack::DictionaryAttack(std::string givenHash, std::string hash_Type)
  * @param  filename [description]
  * @return          [description]
  */
-bool DictionaryAttack::loadDictionary(std::string filename) {
-	//int attempts = 0;
+bool DictionaryAttack::loadDictionary(std::string &filename) {
 	std::string line;
 	
 	//debugging line
 	//std::cout << "Inside loadDictionary Function" << std::endl;
 	
-	std::ifstream file(filename);
+	std::ifstream file;
 	file.open(filename);
-	
+
 	if(!file.is_open()) {
 		std::cout << "The dictionary file was unabled to be loaded successfully." << std::endl;
 		return false;
 	}
 	else {
 		std::cout << "The dictionary file was loaded successfully" << std::endl;
-		launchDictionaryAttack(&file, hashType);
-		
-		/**
+		launchDictionaryAttack(file);
 		file.close();
-		*/
 		return true;
 	}
 }
@@ -64,121 +60,141 @@ bool DictionaryAttack::loadDictionary(std::string filename) {
  * @param filename     [description]
  * @param hashType [description]
  */
-void DictionaryAttack::launchDictionaryAttack(std::ifstream *filename, std::string &hashType) {
+void DictionaryAttack::launchDictionaryAttack(std::ifstream &file) {
 	std::string line;
 	int lineCount = 0;
 	std::string dictionaryHash;
 	bool result;
-	
-	std::ifstream inFile;
-	std::string my_name = "smallWordlist.txt";
-	inFile.open(my_name.c_str());
-	
+
 	std::cout << "Launching Dictionary Attack" << std::endl;
 	
 	auto start = high_resolution_clock::now();
 	
-	// while(!filename->eof()) {
-	//while(filename->is_open()) {
 		if(hashType == "MD5") {
 			//debugging line
 			//std::cout << "Inside the MD5 if statement" << std::endl;
-			
-			//while(!filename->eof()) {
-			//while(*filename >> line) {
-			
-			//debugging line
-			//std::cout << "getline" << std::endl;
-			std::cin.ignore();
-			
-			if(inFile.fail()) {
-				std::cout << "The file did not load properly." << std::endl;
-			} else {
-				while(std::getline(inFile, line, '\n')) {
+			while(!file.eof()) {
+				file >> line;
+				//std::cin.ignore();
+				//std::getline(file, line, '\n');
 				
-					// *filename >> line;
-					
-					//debugging line
-					//std::cout << line << std::endl;
-					lineCount++;
-					
-					dictionaryHash = calculateHash_MD5(line);
+				//debugging line
+				std::cout << line << std::endl;
+				lineCount++;
+				
+				dictionaryHash = calculateHash_MD5(line);
+				std::cout << std::endl;
+				
+				//debugging line
+				//std::cout << "The dictionary hash is: " << dictionaryHash << std::endl;
+				//std::cout << std::endl;
+				
+				result = compareHashes(dictionaryHash, line);
+				if(result == true) {
+					auto stop = high_resolution_clock::now();
+					auto duration = duration_cast<microseconds>(stop - start);
 					std::cout << std::endl;
-					
-					//debugging line
-					//std::cout << "The dictionary hash is: " << dictionaryHash << std::endl;
-					//std::cout << std::endl;
-					
-					result = compareHashes(dictionaryHash, line);
-					if(result == true) {
-						auto stop = high_resolution_clock::now();
-						auto duration = duration_cast<microseconds>(stop - start);
-						std::cout << std::endl;
-						std::cout << "The time taken by this program to find the password that matched the hash was: " << duration.count() << " microseconds" << std::endl;
-						std::cout << std::endl;
-						std::cout << "This program read through " << lineCount << " lines" << std::endl;
-						exit(0);
-					}
+					std::cout << "The time taken by this program to find a match was: " << duration.count() << " microseconds" << std::endl;
+					std::cout << std::endl;
+					std::cout << "This program read through " << lineCount << " lines to find a match." << std::endl;
+					exit(0);
 				}
 			}
 		}
 		else if(hashType == "SHA1") {
-			//while(!filename->eof()) {
-			while(*filename >> line) {
-				//*filename >> line;
+			//debugging line
+			//std::cout << "Inside the SHA1 if statement" << std::endl;
+			while(!file.eof()) {
+				std::cin.ignore();
+				std::getline(file, line, '\n');
+				
 				//debugging line
 				std::cout << line << std::endl;
 				lineCount++;
+				
 				dictionaryHash = calculateHash_SHA1(line);
+				std::cout << std::endl;
+				
 				//debugging line
-				std::cout << "The dictionary hash is: " << dictionaryHash << std::endl;
+				//std::cout << "The dictionary hash is: " << dictionaryHash << std::endl;
+				//std::cout << std::endl;
 				
 				result = compareHashes(dictionaryHash, line);
 				if(result == true) {
+					auto stop = high_resolution_clock::now();
+					auto duration = duration_cast<microseconds>(stop - start);
+					std::cout << std::endl;
+					std::cout << "The time taken by this program to find the password that matched the hash was: " << duration.count() << " microseconds" << std::endl;
+					std::cout << std::endl;
+					std::cout << "This program read through " << lineCount << " lines" << std::endl;
 					exit(0);
 				}
 			}
 		}
 		else if(hashType == "SHA256") {
-			//while(!filename->eof()) {
-			while(*filename >> line) {
-				//*filename >> line;
+			//debugging line
+			//std::cout << "Inside the SHA256 if statement" << std::endl;
+			while(!file.eof()) {
+				std::cin.ignore();
+				std::getline(file, line, '\n');
+				
 				//debugging line
 				std::cout << line << std::endl;
 				lineCount++;
+				
 				dictionaryHash = calculateHash_SHA256(line);
+				std::cout << std::endl;
+				
 				//debugging line
-				std::cout << "The dictionary hash is: " << dictionaryHash << std::endl;
+				//std::cout << "The dictionary hash is: " << dictionaryHash << std::endl;
+				//std::cout << std::endl;
 				
 				result = compareHashes(dictionaryHash, line);
 				if(result == true) {
+					auto stop = high_resolution_clock::now();
+					auto duration = duration_cast<microseconds>(stop - start);
+					std::cout << std::endl;
+					std::cout << "The time taken by this program to find the password that matched the hash was: " << duration.count() << " microseconds" << std::endl;
+					std::cout << std::endl;
+					std::cout << "This program read through " << lineCount << " lines" << std::endl;
 					exit(0);
 				}
 			}
 		}
 		else if(hashType == "SHA512") {
-			//while(!filename->eof()) {
-			while(*filename >> line) {
-				//*filename >> line;
+			//debugging line
+			//std::cout << "Inside the SHA512 if statement" << std::endl;
+			while(!file.eof()) {
+				std::cin.ignore();
+				std::getline(file, line, '\n');
+				
 				//debugging line
 				std::cout << line << std::endl;
 				lineCount++;
+				
 				dictionaryHash = calculateHash_SHA512(line);
+				std::cout << std::endl;
+				
 				//debugging line
-				std::cout << "The dictionary hash is: " << dictionaryHash << std::endl;
+				//std::cout << "The dictionary hash is: " << dictionaryHash << std::endl;
+				//std::cout << std::endl;
 				
 				result = compareHashes(dictionaryHash, line);
 				if(result == true) {
+					auto stop = high_resolution_clock::now();
+					auto duration = duration_cast<microseconds>(stop - start);
+					std::cout << std::endl;
+					std::cout << "The time taken by this program to find the password that matched the hash was: " << duration.count() << " microseconds" << std::endl;
+					std::cout << std::endl;
+					std::cout << "This program read through " << lineCount << " lines" << std::endl;
 					exit(0);
 				}
 			}
 		}
 		else {
-			std::cout << "Error: No hash type specified" << std::endl;
-			//break;
+			std::cout << "Error: Hash type did not match any supported hashes." << std::endl;
 			exit(0);
 		}
-	// }
 }
 
 std::string DictionaryAttack::calculateHash_MD5(std::string input) {
@@ -266,8 +282,7 @@ bool DictionaryAttack::compareHashes(std::string dictionaryHash, std::string lin
 		//std::cout << "Inside the compare Hashes Function" << std::endl;
 		std::cout << "This program has found a match for the given hash." << std::endl;
 		std::cout << std::endl;
-		std::cout << "The matching password is: " << line << std::endl;
-		//std::cout << "This program read through " << lineCount << "lines" << std::endl;
+		std::cout << "The password that matches the given hash is: " << line << std::endl;
 		return true;
 	}
 	else {
