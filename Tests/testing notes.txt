@@ -21,3 +21,8 @@ password
 The given input was: password
 SHA512 digest:    b109f3bbbc244eb82441917ed06d618b9008dd09
 Online Generator: b109f3bbbc244eb82441917ed06d618b9008dd09 b3befd1b5e07394C706a8bb980b1d7785e5976eC049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86
+
+
+curl -d "username=user3&password=password1&submit=Login" http://localhost/Login-Test/login.php -v
+
+curl -d username="user3" -d password="password1" -d submit="Login" http://localhost/Login-Test/login.php -v   

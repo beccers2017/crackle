@@ -196,7 +196,11 @@ void DictionaryAttack::launchDictionaryAttack(std::ifstream &file) {
 			exit(0);
 		}
 }
-
+/**
+ * [DictionaryAttack::calculateHash_MD5 description]
+ * @param  input [description]
+ * @return       [description]
+ */
 std::string DictionaryAttack::calculateHash_MD5(std::string input) {
 	unsigned char digest[MD5_DIGEST_LENGTH];
 	//const char* std::string str = input.c_str();
@@ -216,7 +220,11 @@ std::string DictionaryAttack::calculateHash_MD5(std::string input) {
 	// std::cout << mdString << std::endl;
 	return mdString;
 }
-
+/**
+ * [DictionaryAttack::calculateHash_SHA1 description]
+ * @param  input [description]
+ * @return       [description]
+ */
 std::string DictionaryAttack::calculateHash_SHA1(std::string input) {
 	unsigned char digest[SHA_DIGEST_LENGTH];
 	//const char* std::string str = input.c_str();
@@ -234,7 +242,11 @@ std::string DictionaryAttack::calculateHash_SHA1(std::string input) {
 	//printf("SHA1 digest: %s\n", mdString);
 	return mdString;
 }
-
+/**
+ * [DictionaryAttack::calculateHash_SHA256 description]
+ * @param  input [description]
+ * @return       [description]
+ */
 std::string DictionaryAttack::calculateHash_SHA256(std::string input) {
 	unsigned char digest[SHA_DIGEST_LENGTH];
 	//const char* std::string str = input.c_str();
@@ -252,7 +264,11 @@ std::string DictionaryAttack::calculateHash_SHA256(std::string input) {
 	//printf("SHA256 digest: %s\n", mdString);
 	return mdString;
 }
-
+/**
+ * [DictionaryAttack::calculateHash_SHA512 description]
+ * @param  input [description]
+ * @return       [description]
+ */
 std::string DictionaryAttack::calculateHash_SHA512(std::string input) {
 	unsigned char digest[SHA_DIGEST_LENGTH];
 	//const char* std::string str = input.c_str();

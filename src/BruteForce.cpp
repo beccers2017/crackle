@@ -25,7 +25,7 @@ BruteForce::BruteForce(std::string userName) {
 	user = userName;
 }
 
-bool BruteForce::writeToFile(std::ofstream *filename) {
+bool BruteForce::loadWriteFile(std::string &filename) {
 	std::ofstream file;
 	file.open(filename);
 	if(!file.is_open()) {
@@ -34,9 +34,9 @@ bool BruteForce::writeToFile(std::ofstream *filename) {
 	}
 	else {
 		std::cout << "The output file was loaded successfully." << std::endl;
-		auto start = high_resolution_clock::now();
 		
-		launchBruteForceAttack(chars, passwordLength, current);
+		auto start = high_resolution_clock::now();
+		launchBruteForceAttack(passChars, passwordLength, current, file);
 		auto stop = high_resolution_clock::now();
 		auto duration = duration_cast<microseconds>(stop - start);
 		std::cout << "Time taken by the function: " << duration.count() << " microseconds" << std::endl;
@@ -49,36 +49,21 @@ bool BruteForce::writeToFile(std::ofstream *filename) {
 
 //could ask user to give a password length, instructing them that the length has to be <=8
 //first parameter will probably need to be editted to match passChars
-void BruteForce::launchBruteForceAttack(const std::string &passChars, int passwordLength; const std::string &current) {
+void BruteForce::launchBruteForceAttack(const std::string &passChars, int passwordLength; const std::string &current, std::ostream &file) {
 	if(current.length() == passwordLength) {
 		return;
 	}
 	else {
 		for(auto c: passChars) {
 			std::string next = current + c;
+			file << next << std::endl;
 			std::cout << next << std::endl;
-			launchBruteForceAttack(passChars, passwordLength, next);
+			launchBruteForceAttack(passChars, passwordLength, next, file);
 		}
 	}
 }
 
-/**
- * Validates that a valid hash has been inputted by the user
- * @param string hash
- * @return true or false
- */
-//this check may want to be moved into the interface
-/**
-bool BruteForce::validateHashType(std::string &hashType) {
-	if(hashType == "MD5" || hashType == "SHA1" || hashType == "SHA256" || hashType == "SHA512") {
-		return true;
-	}
-	else {
-		std::cout << "An invalid hash type has been entered. This program supports MD5, SHA1, SHA256 and SHA512 type hashes." << std::endl;
-		return false;
-	}
-}
-*/
+
 
 /**
 string BruteForce::BruteForceAttack(int maxAttempts) { //parameter maybe being the max number of attempts? or a timeout
