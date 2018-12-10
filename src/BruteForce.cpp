@@ -58,6 +58,7 @@ void BruteForce::launchBruteForceAttack(const std::string &passChars, int passwo
 			std::string next = current + c;
 			file << next << std::endl;
 			testPassword(user, next);
+			//debugging line
 			std::cout << next << std::endl;
 			launchBruteForceAttack(passChars, passwordLength, next, file);
 		}
@@ -65,6 +66,11 @@ void BruteForce::launchBruteForceAttack(const std::string &passChars, int passwo
 }
 
 bool BruteForce::testPassword(std::string user, std::string password) {
+	/* Concatenate multiple strings together to firm the long command string? */
+	std::string 
+	
+	
+	
 	std::string result;
 	std::string command = "curl -w \"HTTP Status:%{http_code}\" -d \"username=user3&password=password1&submit=Login\" http://localhost/Login-Test/login.php -v";
 	result = std::system(command.c_str());
