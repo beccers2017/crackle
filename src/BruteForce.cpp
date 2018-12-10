@@ -18,6 +18,10 @@ using namespace std::chrono;
 //static const char passChars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?@#$^&*";
 //const char* passChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?@#$^&*";
 const std::string passChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?@#$^&*";
+const std::string lowerChars = "abcdefghijklmnopqrstuvwxyz";
+const std::string upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const std::string numbers = "0123456789";
+const std::string specialChars = "!?@#$^&*";
 static const int passCharSize = 70;
 static const int maxPasswordSize = 8;
 
@@ -38,18 +42,14 @@ bool BruteForce::loadWriteFile(std::string &filename) {
 		auto start = high_resolution_clock::now();
 		launchBruteForceAttack(passChars, passwordLength, current, file);
 		auto stop = high_resolution_clock::now();
-		auto duration = duration_cast<microseconds>(stop - start);
-		std::cout << "Time taken by the function: " << duration.count() << " microseconds" << std::endl;
-		/**
+		auto duration = duration_cast<seconds>(stop - start);
+		std::cout << "Time taken by the function: " << duration.count() << " seconds" << std::endl;
 		file.close();
-		*/
 		return true;
 	}
 }
 
-//could ask user to give a password length, instructing them that the length has to be <=8
-//first parameter will probably need to be editted to match passChars
-void BruteForce::launchBruteForceAttack(const std::string &passChars, int passwordLength; const std::string &current, std::ostream &file) {
+void BruteForce::launchBruteForceAttack(const std::string &passChars, int passwordLength, const std::string &current, std::ostream &file) {
 	if(current.length() == passwordLength) {
 		return;
 	}
@@ -57,52 +57,22 @@ void BruteForce::launchBruteForceAttack(const std::string &passChars, int passwo
 		for(auto c: passChars) {
 			std::string next = current + c;
 			file << next << std::endl;
+			testPassword(user, next);
 			std::cout << next << std::endl;
 			launchBruteForceAttack(passChars, passwordLength, next, file);
 		}
 	}
 }
 
-
-
-/**
-string BruteForce::BruteForceAttack(int maxAttempts) { //parameter maybe being the max number of attempts? or a timeout
-	auto_cpu_timer timer;
-	
-	int attempts = 0;
-
-	for(int i = 0; i < 70; i++) {
-		for(int j = 0; j < 70; j++) {
-			for(int k = 0; k < 70; k++) {
-				for(int n = 0; n < 70; n++) {
-					for(int m = 0; n < 70; m++) {
-						std::string possiblePassword = "";
-						possiblePassword += passChars[i];
-						possiblePassword += passChars[j];
-						possiblePassword += passChars[k];
-						possiblePassword += passChars[n];
-						possiblePassword += passChars[m];
-					}
-				}
-			}
-		}
-	}
-	std::string encryptedPassword = calculateHash_MD5(possiblePassword);
-
-	if(possiblePassword == password) {
-		return possiblePassword;
-	}
-	else {
-		attempts++;
-		if(attempts == maxAttempts) {
-			std::cout << "Maximum number of attempts reached for brute force." << std::endl;
-		}
-		else {
-			//move onto generating the next password (maybe recursion?)
-		}
-	}
+bool BruteForce::testPassword(std::string user, std::string password) {
+	std::string result;
+	std::string command = "curl -w \"HTTP Status:%{http_code}\" -d \"username=user3&password=password1&submit=Login\" http://localhost/Login-Test/login.php -v";
+	result = std::system(command.c_str());
+	std::cout << std::endl;
+	std::cout << result << std::endl;
 }
-*/
+
+
 
 std::string BruteForce::calculateHash_MD5(std::string input) {
 	unsigned char digest[MD5_DIGEST_LENGTH];

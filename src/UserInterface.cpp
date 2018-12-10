@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <stdlib.h>
+#include <getopt.h>
 #include "include/UserInterface.h"
 
 #include "termcolor/termcolor.hpp"
@@ -63,9 +64,9 @@ void UserInterface::printHelp() {
 	std::cout << "    Options:" <<std::endl;
 	std::cout << "        -d : use default dictionary file" << std::endl;
 	std::cout << "        -c : use custom dictionary file" << std::endl; //need to add more usage information here on loading custom file
-	std::cout << "        -h : Hash Type if known (optional)" << std::endl;
+	std::cout << "        -h : Hash Type if known (required for dictionary attack)" << std::endl;
 	std::cout << "        -o : write results to output file" << std::endl; //again add more usage information
-	std::cout << "        -l : Include a log file" << std::endl;
+	//std::cout << "        -l : Include a log file" << std::endl;
 	std::cout << std::endl;
 	std::cout << "    Examples: " << std::endl;
 	std::cout << "        ./crackle -d" << std::endl;
@@ -77,6 +78,10 @@ void UserInterface::printHelp() {
 /**
  * Could also add an option for command line usage only or easier usage where it walks you through the process of running the program
  */
+
+void UserInterface::readConsoleInput(int argc, char** argv) {
+
+}
 
 /**
 void UserInterface::menu() {
@@ -116,9 +121,3 @@ void UserInterface::menu() {
 }
 */
 
-void UserInterface::readConsoleInput(int argc, char *argv[]) {
-	
-}
-
-//clear screen function or keep this information displayed all the time -- maybe this is the purpose of print screen since it is currently unused
-//if something is missing print the help message
