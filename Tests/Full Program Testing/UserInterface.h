@@ -1,5 +1,5 @@
 /**
- * @file
+ * @file UserInterface.h
  * @author Rebecca Donohoe
  * @version 0.1.0
  */
@@ -15,7 +15,9 @@ class UserInterface {
 		UserInterface();
 		void printInfo();
 		void printHelp();
+		void selection();
 		void menu();
+		bool validateHashType(std::string &hash_type);
 	private:
 };
 #endif

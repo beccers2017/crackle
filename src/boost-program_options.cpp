@@ -22,7 +22,7 @@
 #include <boost/program_options.hpp>
 #include <boost/filesystem.hpp>
 
-using namespace boost::filesystem;
+namespace fs = boost::filesystem;
 namespace po = boost::program_options;
 
 const std::string version = "Crackle version 0.1.0";
@@ -46,17 +46,22 @@ void process_program_options(const int argc, const char *const argv[]) {
 	desc.add_options()
 		("help, h", "Show help message")
 		("version, v", "Show version number")
-		("user-name, u", po::value<std::vector<std::string>>(username), "Give a user name for brute-force attack") //username might need to be changed because its a private member
-		("hash-type, t", po::value<std::vector<std::string>>(hashType), "Enter the type of the hash entered") //same as above for hashType
-		("output-file,o", po::value<std::vector<std::string>>(), "Names the output file") //will need to use filesystem here?
-		
-		
+		("username, u", po::value<std::vector<std::string>>(username), "Give a user name for brute-force attack") //username might need to be changed because its a private member
+		("hash, h", po::value<std::vector<std::string>>(given_hash), "Given a hash for dictionary attack")
+		("type, t", po::value<std::vector<std::string>>(hashType), "Specify the type of hash for dictionary attack") //same as above for hashType
+		("output,o", po::value<std::vector<std::string>>(), "Write data to an output file") //will need to use filesystem here?
+		("custom-dictionary, c", po::value<std::vector<std::string>>()->default_value("parsedWordlist.txt"), "Specify a custom dictionary file")
 	;
+	
+	if(argc == 1) {
+		show_help(desc);
+	}
 	
 	po::variables_map vm;
 	
 	try {
-		po::store(po::parse_command_line(argc, argv, desc), vm);
+		po::store(
+			po::parse_command_line(argc, argv, desc), vm);
 	}
 	catch(po::error const& e) {
 		std::cerr << e.what() << '\n';
@@ -64,23 +69,27 @@ void process_program_options(const int argc, const char *const argv[]) {
 	}
 	po::notify(vm);
 	
-	/**
-	if(vm.count("default-dictionary,d")) {
-		std::cout << desc << std::endl;
-		return 1;
-	}
-	if(vm.count("custom-dictionary,c")) {
-		std::cout << 
-	}
-	*/
 	if(vm.count("help")) {
-		std::cout << desc << '\n';
+		std::cout << desc << std::endl;
 	}
 	if(vm.count("version")) {
-		std::cout << "Program Options sample " << version << '\n';
+		std::cout << version << std::endl;
+	}
+	if(vm.count("username")) {
+		std::cout << "The user name entered was " << vm["username"].as<std::string>() << std::endl;
+	} else {
+		std::cout << "A user name was not entered" << std::endl;
+	}
+	if(vm.count("hash")) {
+		std:: 
 	}
 }
 
+
+po::positional_options_description p;
+p.add
+
+/*
 void walk_dirs(const std::vector<std::string>& dirs) {
 	size_t n_files(0);
 	for(const auto& dir : dirs) {
@@ -103,7 +112,7 @@ int main(int argc, char *argv[]) {
 	process_program_options(argc, argv);
 	//return 0;
 }
-
+*/
 /**
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
@@ -122,6 +131,7 @@ int main(int argc, char** argv) {
 }
 */
 
+/*
 namespace po = boost::program_options;
 namespace fs = boost::filesystem;
 
@@ -144,6 +154,7 @@ void make_path_absolute(
  * In this first case the root is the execution directory, in the 
  * second case, it's the configuration file parent folder
  */
+/*
 namespace po = boost::program_options;
 namespace fs = boost::filesystem;
 
@@ -156,3 +167,4 @@ po::store(po::parse_config_file(ifs, options, true), vm);
 make_path_absolute("foo.path", vm, configuration_file.parent_path());
 
 po::notify(vm);
+*/

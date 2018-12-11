@@ -1,11 +1,13 @@
 CXX = g++
-CXXFLAGS = -std=c++11
+CXXFLAGS = -std=c++11 -lcrypto
 
-all: crackle
+TARGET = crackle
+
+all: $(TARGET)
 
 clean:
 	rm crackle
 
-crackle: 
-	$(CXX) $(CXXFLAGS) crackle.cpp -o crackle
+crackle: crackle.cpp UserInterface.cpp DictionaryAttack.cpp
+	$(CXX) $(CXXFLAGS) crackle.cpp -o crackle 
 

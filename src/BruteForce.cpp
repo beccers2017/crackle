@@ -66,88 +66,55 @@ void BruteForce::launchBruteForceAttack(const std::string &passChars, int passwo
 	}
 }
 
-bool BruteForce::testPassword(std::string user, std::string password) {
-	/* Concatenate multiple strings together to firm the long command string? */
-	std::string 
-	
-	
-	
+void BruteForce::testPassword(std::string user, std::string password) {
 	std::string result;
-	std::string command = "curl -w \"HTTP Status:%{http_code}\" -d \"username=user3&password=password1&submit=Login\" http://localhost/Login-Test/login.php -v";
+	std::string s1 = "curl -w \"HTTP Status:%{http_code}\" -d \"";
+	std::string s2 = "username=";
+	//user3  
+	std::string s3 = "&password=";
+	//password1
+	std::string s4 = "&submit=Login\" http://localhost/Login-Test/login.php -v";
+
+	std::string command = s1 + s2 + user + s3 + password + s4;
+	//debugging line
+	std::cout << command << std::endl;
 	result = std::system(command.c_str());
-	std::cout << std::endl;
+	//debugging line
 	std::cout << result << std::endl;
-}
-
-
-
-std::string BruteForce::calculateHash_MD5(std::string input) {
-	unsigned char digest[MD5_DIGEST_LENGTH];
-	const char* std::string str = input.c_str();
-	
-	MD5_CTX ctx;
-	MD5_Init(&ctx);
-	MD5_Update(&ctx, str, strlen(str));
-	MD5_Final(digest, &ctx);
-	
-	char mdString[MD5_DIGEST_LENGTH*2 + 1];
-	for(int i = 0; i < MD5_DIGEST_LENGTH; i++) {
-		sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
+	bool isValid;
+	isValid = validateTest();
+	if(isValid == true) {
+		std::cout << "This program was able to log in using the password: " << password << std::endl;
 	}
-	printf("MD5 digest: %s\n", mdString);
-	return mdString;
 }
 
-std::string BruteForce::calculateHash_SHA1(std::string input) {
-	unsigned char digest[SHA_DIGEST_LENGTH];
-	const char* std::string str = input.c_str();
+bool BruteForce::validateTest() {
+	std::string str1 = "Login Successful";
+	//std::string str2 = "Login unsuccessful";
+	std::string valid;
+
+	std::string directory = "/home/rebecca/";
+	chdir(directory.c_str());
 	
-	SHA_CTX ctx;
-	SHA1_Init(&ctx);
-	SHA1_Update(&ctx, str, strlen(str));
-	SHA1_Final(digest, &ctx);
+	std::string command = "cat /opt/lampp/htdocs/Login-Test/file.txt";
+	valid = std::system(command.c_str());
+	std::cout << valid << std::endl;
 	
-	char mdString[SHA_DIGEST_LENGTH*2 + 1];
-	for(int i = 0; i < SHA_DIGEST_LENGTH; i++) {
-		sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
+	if(valid.compare(str1) != 0) {
+		return false;
 	}
-	printf("SHA1 digest: %s\n", mdString);
-	return mdString;
-}
-
-std::string BruteForce::calculateHash_SHA256(std::string input) {
-	unsigned char digest[SHA_DIGEST_LENGTH];
-	const char* std::string str = input.c_str();
-	
-	SHA_CTX ctx;
-	SHA256_Init(&ctx);
-	SHA256_Update(&ctx, str, strlen(str));
-	SHA256_Final(digest, &ctx);
-	
-	char mdString[SHA_DIGEST_LENGTH*2 + 1];
-	for(int i = 0; i < SHA_DIGEST_LENGTH; i++) {
-		sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
+	else if(valid.compare(str1) == 0) {
+		std::cout << "Login was successful" << std::endl;
+		return true;
 	}
-	printf("SHA256 digest: %s\n", mdString);
-	return mdString;
-}
-
-std::string BruteForce::calculateHash_SHA512(std::string input) {
-	unsigned char digest[SHA_DIGEST_LENGTH];
-	const char* std::string str = input.c_str();
-
-	SHA_CTX ctx;
-	SHA512_Init(&ctx);
-	SHA512_Update(&ctx, str, strlen(str));
-	SHA512_Final(digest, &ctx);
-	
-	char mdString[SHA_DIGEST_LENGTH*2 + 1];
-	for(int i = 0; i < SHA_DIGEST_LENGTH; i++) {
-		sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
+	else {
+		std::cout << "Error" << std::endl;
+		return false;
 	}
-	printf("SHA512 digest: %s\n", mdString);
-	return mdString;
 }
+
+
+
 
 
 
