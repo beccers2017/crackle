@@ -25,7 +25,7 @@
 using namespace boost::filesystem;
 namespace po = boost::program_options;
 
-const std::string version = "0.1.0";
+const std::string version = "Crackle version 0.1.0";
 
 /**
 void UserInterface::printHelp() {
@@ -46,8 +46,10 @@ void process_program_options(const int argc, const char *const argv[]) {
 	desc.add_options()
 		("help, h", "Show help message")
 		("version, v", "Show version number")
-		("user-name, u", "Give a user name for brute-force attack") //need to add middle value
-		("hash-type, t", "Enter the type of the hash entered") //need to add middle value
+		("user-name, u", po::value<std::vector<std::string>>(username), "Give a user name for brute-force attack") //username might need to be changed because its a private member
+		("hash-type, t", po::value<std::vector<std::string>>(hashType), "Enter the type of the hash entered") //same as above for hashType
+		("output-file,o", po::value<std::vector<std::string>>(), "Names the output file") //will need to use filesystem here?
+		
 		
 	;
 	

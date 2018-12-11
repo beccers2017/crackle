@@ -8,8 +8,8 @@
 #include <stdlib.h>
 #include <getopt.h>
 #include "include/UserInterface.h"
-#include "termcolor.hpp"
-//#include "termcolor/termcolor.hpp"
+
+#include "termcolor/termcolor.hpp"
 //#include "BruteForce.h"
 //#include "DictionaryAttack.h"
 //#include <boost/program_options.hpp>
@@ -30,11 +30,12 @@ void UserInterface::printInfo() {
 	std::cout << "Date: " << __DATE__ << std::endl;
 	std::cout << "Time: " << __TIME__ << std::endl;
 	std::cout << std::endl;
-	std::cout << "     " << termcolor::green << "***********************************************************************************" << std::endl;
-	std::cout << "     " << termcolor::green << "*                          Crackle: A Password Cracker                            *" << std::endl;
-	std::cout << "     " << termcolor::green << "*                                 Version 0.1.0                                   *" << std::endl;
-	std::cout << "     " << termcolor::green << "*                           Written by Rebecca Donohoe                            *" << std::endl;
-	std::cout << "     " << termcolor::green << "***********************************************************************************" << std::endl;
+	std::cout << "     " << termcolor::blue << "***********************************************************************************" << std::endl;
+	std::cout << "     " << termcolor::blue << "*                          Crackle: A Password Cracker                            *" << std::endl;
+	std::cout << "     " << termcolor::blue << "*                                 Version 0.1.0                                   *" << std::endl;
+	std::cout << "     " << termcolor::blue << "*                           Written by Rebecca Donohoe                            *" << std::endl;
+	std::cout << "     " << termcolor::blue << "***********************************************************************************" << std::endl;
+	std::cout << termcolor::reset << std::endl;
 	std::cout << std::endl;
 	std::cout << "             " << "This is a password cracking tool, intended for educational purposes." << std::endl;
 	std::cout << "                     " << "This tool supports MD5, SHA1, SHA256, and SHA 512 hashes." << std::endl;

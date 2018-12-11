@@ -7,6 +7,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
+#include <cstdlib>
 #include <fstream>
 #include "BruteForce.h"
 #include <chrono>
