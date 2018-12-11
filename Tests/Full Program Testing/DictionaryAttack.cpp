@@ -103,6 +103,8 @@ void DictionaryAttack::launchDictionaryAttack(std::ifstream &file) {
 					exit(0);
 				}
 			}
+			std::cout << "This program did not find a match to the given hash" << std::endl;
+			exit(0);
 		}
 		else if(hashType == "SHA1") {
 			//debugging line
@@ -133,6 +135,8 @@ void DictionaryAttack::launchDictionaryAttack(std::ifstream &file) {
 					exit(0);
 				}
 			}
+			std::cout << "This program did not find a match to the given hash" << std::endl;
+			exit(0);
 		}
 		else if(hashType == "SHA256") {
 			//debugging line
@@ -163,6 +167,8 @@ void DictionaryAttack::launchDictionaryAttack(std::ifstream &file) {
 					exit(0);
 				}
 			}
+			std::cout << "This program did not find a match to the given hash" << std::endl;
+			exit(0);
 		}
 		else if(hashType == "SHA512") {
 			//debugging line
@@ -193,6 +199,8 @@ void DictionaryAttack::launchDictionaryAttack(std::ifstream &file) {
 					exit(0);
 				}
 			}
+			std::cout << "This program did not find a match to the given hash" << std::endl;
+			exit(0);
 		}
 		else {
 			std::cout << "Error: Hash type did not match any supported hashes." << std::endl;
