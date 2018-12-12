@@ -14,21 +14,23 @@
 #include <cerrno>
 #include "BruteForce.h"
 #include <chrono>
+#include "termcolor/termcolor.hpp"
 
 using namespace std::chrono;
 
 //static const char passChars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?@#$^&*";
 //const char* passChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?@#$^&*";
-const std::string passChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?@#$^&*";
-const std::string lowerChars = "abcdefghijklmnopqrstuvwxyz";
-const std::string upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const std::string numbers = "0123456789";
-const std::string specialChars = "!?@#$^&*";
+//const std::string passChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?@#$^&*";
+//const std::string lowerChars = "abcdefghijklmnopqrstuvwxyz";
+//const std::string upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+//const std::string numbers = "0123456789";
+//const std::string specialChars = "!?@#$^&*";
 //static const int passCharSize = 70;
 static const int maxPasswordSize = 8;
 
-BruteForce::BruteForce(std::string userName) {
+BruteForce::BruteForce(std::string userName, int password_length) {
 	user = userName;
+	passwordLength = password_length;
 }
 
 void BruteForce::launchBruteForceAttack(const std::string &passChars, int passwordLength, const std::string &current, std::ostream &file) {
@@ -66,8 +68,8 @@ bool BruteForce::loadWriteFile(std::string &filename) {
 		std::cout << "Launching Bruteforce attack" << std::endl;
 		launchBruteForceAttack(passChars, passwordLength, current, file);
 		auto stop = high_resolution_clock::now();
-		auto duration = duration_cast<seconds>(stop - start);
-		std::cout << "Time taken by the function: " << duration.count() << " seconds" << std::endl;
+		auto duration = duration_cast<microseconds>(stop - start);
+		std::cout << "Time taken by the function: " << duration.count() << " microseconds" << std::endl;
 		file.close();
 		return true;
 	}

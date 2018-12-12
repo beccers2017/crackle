@@ -18,6 +18,7 @@ class UserInterface {
 		void selection();
 		void menu();
 		bool validateHashType(std::string &hash_type);
+		bool validatePasswordSize(int password_length);
 	private:
 };
 #endif

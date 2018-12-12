@@ -8,6 +8,17 @@ int main() {
 	std::cin >> userName;
 	
 	BruteForce b(userName);
-	std::cout << "Would you like to write the combinations generated during the Bruteforce attack to a file?" << std::endl;
+	//std::cout << "Would you like to write the combinations generated during the Bruteforce attack to a file?" << std::endl;
+
+	std::string filename;
+	filename = "file.txt";
+	
+	const std::string &passChars = "abcde";
+	int passwordLength = 5;
+	const std::string &current = "";
+	
+	b.loadWriteFile(filename);
+	return 0;
+	
 	
 }

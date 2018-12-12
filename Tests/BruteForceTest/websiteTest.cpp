@@ -24,21 +24,41 @@ void testPassword(std::string user, std::string password) {
 	result = std::system(command.c_str());
 	//debugging line
 	std::cout << result << std::endl;
-	validateTest();
+	
+	//debugging line
+	std::cout << "Before validateTest" << std::endl;
+	
+	bool isValid;
+	isValid = validateTest();
+	if(isValid == true) {
+		std::cout << "This program was able to log in using the password: " << password << std::endl;
+		exit(0);
+	}
 }
 
 bool validateTest() {
 	std::string str1 = "Login Successful";
 	//std::string str2 = "Login unsuccessful";
 	std::string valid;
-
+	
 	std::string directory = "/home/rebecca/";
 	chdir(directory.c_str());
 	
+	//debugging line
+	std::cout << "Inside validateTest" << std::endl;
+	
 	std::string command = "cat /opt/lampp/htdocs/Login-Test/file.txt";
 	valid = std::system(command.c_str());
-	std::cout << valid << std::endl;
 	
+	if(valid == str1) {
+		std::cout << "Login was successful" << std::endl;
+		return true;
+	}
+	else {
+		return false;
+	}
+	
+	/**
 	if(valid.compare(str1) != 0) {
 		return false;
 	}
@@ -50,6 +70,7 @@ bool validateTest() {
 		std::cout << "Error" << std::endl;
 		return false;
 	}
+	*/
 }
 
 int main() {

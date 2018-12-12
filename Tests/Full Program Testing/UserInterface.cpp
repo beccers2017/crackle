@@ -10,11 +10,12 @@
 #include "UserInterface.h"
 
 #include "termcolor/termcolor.hpp"
-//#include "BruteForce.h"
+#include "BruteForce.h"
 #include "DictionaryAttack.h"
 //#include <boost/program_options.hpp>
 
 //using namespace boost::program_options;
+static const int maxPasswordSize = 8;
 
 UserInterface::UserInterface() {
 	//default constructor
@@ -83,6 +84,18 @@ bool UserInterface::validateHashType(std::string &hash_type) {
 	else {
 		std::cout << "An invalid hash type has been entered. This program supports MD5, SHA1, SHA256 and SHA512 type hashes." << std::endl;
 		return false;
+		exit(0);
+	}
+}
+
+bool UserInterface::validatePasswordSize(int password_length) {
+	if(password_length > maxPasswordSize) {
+		std::cout << "The maximum password length this program currently supports is 8 characters long" << std::endl;
+		return false;
+		exit(0);
+	}
+	else if(password_length <= maxPasswordSize) {
+		return true;
 	}
 }
 
@@ -97,7 +110,18 @@ void UserInterface::menu() {
 			std::string userName;
 			std::cout << " Enter the user name associated with the password you are attemptting to crack." << std::endl;
 			std::cin >> userName;
-			//BruteForce b(userName);
+			
+			std::cout << "Specify the length of password you would like to generate. The value must be at least 4 characters long ";
+			std::cout << " and a maximum size of 8 characters" << std::endl;
+			int password_length;
+			cin >> password_length;
+			validatePasswordSize(password_length);
+			
+			std::string filename;
+			filename = "brute.txt";
+			
+			BruteForce b(userName, password_length);
+			b.loadWriteFile(filename);
 			break;
 		}
 		case '2': {

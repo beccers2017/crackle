@@ -13,7 +13,7 @@
 
 class BruteForce {
 	public:
-		BruteForce(std::string userName);
+		BruteForce(std::string userName, int password_length);
 		bool loadWriteFile(std::string &filename);
 		void launchBruteForceAttack(const std::string &passChars, int passwordLength, const std::string &current, std::ostream &file);
 		void launchBruteForceAttack(const std::string &passChars, int passwordLength, const std::string &current);
@@ -21,6 +21,8 @@ class BruteForce {
 		bool validateTest();
 	private:
 		std::string user;
-		
+		int passwordLength;
+		const std::string passChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?@#$^&*";
+		const std::string current = "";
 };
 #endif
