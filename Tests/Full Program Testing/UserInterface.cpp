@@ -6,19 +6,92 @@
 
 #include <iostream>
 #include <stdlib.h>
-#include <getopt.h>
-#include "UserInterface.h"
-
+#include <string>
+#include <algorithm>
 #include "termcolor/termcolor.hpp"
+#include "UserInterface.h"
 #include "BruteForce.h"
 #include "DictionaryAttack.h"
-//#include <boost/program_options.hpp>
 
-//using namespace boost::program_options;
+
+const std::string DEFAULT_DICTIONARY = "parsedWordlist.txt";
+const std::string DEFAULT_OUTPUT_FILE = "brute.txt";
+const std::string version = "Crackle version 0.1.0";
 static const int maxPasswordSize = 8;
 
 UserInterface::UserInterface() {
 	//default constructor
+}
+
+void UserInterface::parse_cmd(int argc, char *argv[]) {
+	//std::string bruteforce;
+	//std::string dictionary;
+	
+	while((argv[1] == "bruteforce") && (argc = 6)) {
+		if((argv[2] = "-u") && (argv[4] == "-p") && (argv[6] == "-o")) {
+			std::string userName = argv[3];
+			int password_length = atoi(argv[5]);
+			validatePasswordSize(password_length);
+			BruteForce b(userName, password_length);
+			std::string filename = DEFAULT_OUTPUT_FILE;
+			b.loadWriteFile(filename);
+		}
+	}
+
+	while((argv[1] == "bruteforce") && (argc = 7)) {
+		if((argv[2] = "-u") && (argv[4] == "-p") && (argv[6] == "-o")) {
+			std::string userName = argv[3];
+			int password_length = atoi(argv[5]);
+			validatePasswordSize(password_length);
+			BruteForce b(userName, password_length);
+			std::string filename = argv[7];
+			b.loadWriteFile(filename);
+		}
+	}
+	while((argv[1] == "dictionary") && (argc = 6)) {
+			if((argv[2] == "-g") && (argv[4] = "-t") && (argv[6] == "-d")) {
+				std::string givenHash = argv[3];
+				std::string hash_type = argv[5];
+				validateUppercaseString(hash_type);
+				//validateHashType(hash_type);
+				DictionaryAttack d(givenHash, hash_type);
+				std::string filename = DEFAULT_DICTIONARY;
+				d.loadDictionary(filename);
+			}
+	}
+	while((argv[1] == "dictionary") && (argc = 7)) {
+		if((argv[2] == "-g") && (argv[4] = "-t") && (argv[6] == "-c")) {
+			std::string givenHash = argv[3];
+			std::string hash_type = argv[5];
+			validateUppercaseString(hash_type);
+			//validateHashType(hash_type);
+			DictionaryAttack d(givenHash, hash_type);
+			std::string filename = argv[7];
+			d.loadDictionary(filename);
+		}
+	}
+	
+	while(argc = 2) {
+		if(argv[1] == "-v") {
+			std::cout << version << std::endl;
+		}
+		else if(argv[1] == "-i") {
+			printInfo();
+		}
+		else if(argv[1] == "-h") {
+			printHelp();
+		}
+		else if(argv[1] == "-e") {
+			selection();
+		}
+		else if(argv[1] == "-q") {
+			questions();
+		}
+		else {
+			std::cout << "An invalid option has been entered" << std::endl;
+			printHelp();
+		}
+	}
 }
 
 void UserInterface::printInfo() {
@@ -51,30 +124,43 @@ void UserInterface::selection() {
 	menu();
 }
 
-/**
-void UserInterface::printUsage() {
-	std::cout << " Examples usage: " << std::endl;
-	std::cout << "    ./crackle -d" << std::endl;
-	std::cout << "   Using a custom dictionary file" << std::endl;
-	std::cout << "    ./crackle -c /usr/csci3010-personal-project/Wordlists/parsedWordlist.txt" << std::endl;
-	std::cout << std::endl;
-}
-*/
 void UserInterface::printHelp() { 
 	std::cout << std::endl;
-	std::cout << " Usage: crackle [options] " << std::endl;
+	std::cout << "Usage: ./crackle [attack type] [options] ... " << std::endl;
 	std::cout << std::endl;
-	std::cout << "    Options:" <<std::endl;
-	std::cout << "        -d : use default dictionary file" << std::endl;
-	std::cout << "        -c : use custom dictionary file" << std::endl; //need to add more usage information here on loading custom file
-	std::cout << "        -h : Hash Type if known (required for dictionary attack)" << std::endl;
-	std::cout << "        -o : write results to output file" << std::endl; //again add more usage information
-	//std::cout << "        -l : Include a log file" << std::endl;
+	//std::cout << "    Options:" <<std::endl;
+	std::cout << "The following options are associated with bruteforce attack:" << std::endl;
+	std::cout << std::endl;
+	std::cout << "        -u [username]         Username for bruteforce attack" << std::endl;
+	std::cout << "        -p [password length]  Length of password you want generate" << std::endl;
+	std::cout << "        -o [output file]      Output file for generated passwords (Specifying the output file is optional. Use -o to use default out file)" << std::endl;
+	std::cout << std::endl;
+	std::cout << "The following options are associated with dictionary attack:" << std::endl;
+	std::cout << std::endl;
+	std::cout << "        -g [hash]             Hash for dictionary attack" << std::endl;
+	std::cout << "        -t [hash-type]        Type of hash" << std::endl;
+	std::cout << "        -d                    Use default dictionary file" << std::endl;
+	std::cout << "        -c [path to file]     Use custom dictionary file" << std::endl;
+	std::cout << std::endl;
+	std::cout << "Other options:" << std::endl;
+	std::cout << std::endl;
+	std::cout << "        -v                    Print program version" << std::endl;
+	std::cout << "        -i                    Print program information" << std::endl;
+	std::cout << "        -e                    Easy mode" << std::endl;
+	std::cout << "        -q                    Have questions or found bugs?" << std::endl;
+	std::cout << "        -h                    Produce help information" << std::endl;
 	std::cout << std::endl;
 	std::cout << "    Examples: " << std::endl;
-	std::cout << "        ./crackle -d" << std::endl;
-	std::cout << "        ./crackle -c /usr/csci3010-personal-project/Wordlists/parsedWordlist.txt" << std::endl;
+	std::cout << "        ./crackle bruteforce -u [username] -p [password length] -o" << std::endl;
+	std::cout << "        ./crackle bruteforce -u [username] -p [password length] -o [output file]" << std::endl;
+	std::cout << "        ./crackle dictionary -g [hash] -t [hash-type] -d" << std::endl;
+	std::cout << "        ./crackle dictionary -g [hash] -t [hash-type] -c [path to file]" << std::endl;
 	std::cout << std::endl;
+}
+
+std::string UserInterface::validateUppercaseString(std::string hash_type) {
+	std::transform(hash_type.begin(), hash_type.end(), hash_type.begin(), ::toupper);
+	validateHashType(hash_type);
 }
 
 bool UserInterface::validateHashType(std::string &hash_type) {
@@ -129,15 +215,18 @@ void UserInterface::menu() {
 			std::string filename;
 			filename = "smallWordlist.txt";
 			std::cout << std::endl;
+			
 			std::string givenHash;
 			std::cout << "Enter a hash to begin the dictionary attack." << std::endl;
 			std::cin >> givenHash;
 			std::cout << std::endl;
+			
 			std::string hash_type;
 			std::cout << "Enter the hash type." << std::endl;
 			std::cin >> hash_type;
 			std::cout << std::endl;
-			validateHashType(hash_type);
+			validateUppercaseString(hash_type);
+			//validateHashType(hash_type);
 			DictionaryAttack d(givenHash, hash_type);
 			d.loadDictionary(filename);
 			break;
@@ -162,4 +251,6 @@ void UserInterface::menu() {
 	}
 }
 
-
+void UserInterface::questions() {
+	std::cout << "To ask any questions or report bugs, email rebecca.donohoe@colorado.edu" << std::endl;
+}

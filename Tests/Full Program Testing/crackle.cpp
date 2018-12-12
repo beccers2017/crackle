@@ -7,10 +7,15 @@
 #include <iostream>
 #include "UserInterface.h"
 
-int main() {
+int main(int argc, char *argv[]) {
 	UserInterface u;
-	u.printInfo();
-	u.selection();
+	if(argc < 2) {
+		u.printHelp();
+	} else {
+		u.parse_cmd(argc, argv);
+	}
+	//u.printInfo();
+	//u.selection();
 	//u.printHelp();
 }
 
