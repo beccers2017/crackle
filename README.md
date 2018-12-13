@@ -36,7 +36,9 @@ Turn on Apache web server in the open window, and then go to a browser and load 
 From here go to the top of your file system directory then to /opt/lampp/htdocs/ and move the folder labeled Login-Test into this folder. RW permissions may need to be changed.
 
 Once this folder is placed inside this directory, keep this directory open and go back to your browser and type the url:
+
 	http://localhost/phpmyadmin
+	
 once on this page look inside the Login-Test folder for the users.sql file and open it up in a text editor. Copy all the text from it and go back to the localhost/phpmyadmin page. Once there, click the New button on the left side of the screen to create a new database. Name the database 'demo' 
 and choose the Collation option from the dropdown menu and then hit create. You will see the new database appear on the left part of the screen. Click on the plus sign next to your database name, and then in the dropdown click the new button. This will redirect your page. Click the SQL button in the navigation bar, paste the text in from your users.sql file and hit go to add a table to your database. From here your website should be working when you go to the page:
 
