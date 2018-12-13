@@ -70,8 +70,7 @@ void UserInterface::parse_cmd(int argc, char *argv[]) {
 			d.loadDictionary(filename);
 		}
 	}
-	
-	while(argc = 2) {
+	if(argc = 2) {
 		if(argv[1] == "-v") {
 			std::cout << version << std::endl;
 		}
@@ -92,6 +91,7 @@ void UserInterface::parse_cmd(int argc, char *argv[]) {
 			printHelp();
 		}
 	}
+
 }
 
 void UserInterface::printInfo() {
