@@ -1,13 +1,27 @@
 CXX = g++
-CXXFLAGS = -std=c++11 -lcrypto
+CXXFLAGS = -Wall -g -lcrypto
 
-TARGET = crackle
+all: crackle
 
-all: $(TARGET)
+run: crackle
+	./crackle
 
 clean:
-	rm crackle
+	rm UserInterface.o DictionaryAttack.o BruteForce.o crackle
 
-crackle: crackle.cpp UserInterface.cpp DictionaryAttack.cpp
-	$(CXX) $(CXXFLAGS) crackle.cpp -o crackle 
+crackle: UserInterface.o DictionaryAttack.o BruteForce.o crackle.cpp
+	$(CXX) $(CXXFLAGS) crackle.cpp UserInterface.o BruteForce.o DictionaryAttack.o -o crackle
+
+UserInterface.o: UserInterface.cpp
+	$(CXX) $(CXXFLAGS) -c src/UserInterface.cpp
+
+DictionaryAttack.o: DictionaryAttack.cpp
+	$(CXX) $(CXXFLAGS) -c src/DictionaryAttack.cpp
+
+BruteForce.o: BruteForce.cpp
+	$(CXX) $(CXXFLAGS) -c /srcBruteForce.cpp
+
+
+
+
 

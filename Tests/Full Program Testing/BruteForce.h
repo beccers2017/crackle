@@ -1,7 +1,7 @@
 /**
- * @file
+ * @file BruteForce.h
  * @author Rebecca Donohoe
- * @version
+ * @version 0.1.0
  */
 
 #ifndef BRUTEFORCE_H

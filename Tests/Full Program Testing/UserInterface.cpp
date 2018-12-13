@@ -24,66 +24,102 @@ UserInterface::UserInterface() {
 }
 
 void UserInterface::parse_cmd(int argc, char *argv[]) {
-	//std::string bruteforce;
-	//std::string dictionary;
 	
-	while((argv[1] == "bruteforce") && (argc = 6)) {
-		if((argv[2] = "-u") && (argv[4] == "-p") && (argv[6] == "-o")) {
-			std::string userName = argv[3];
-			int password_length = atoi(argv[5]);
-			validatePasswordSize(password_length);
-			BruteForce b(userName, password_length);
-			std::string filename = DEFAULT_OUTPUT_FILE;
-			b.loadWriteFile(filename);
+	//while((argv[1] == "bruteforce") && (argc == 6)) {
+		//if((argv[2] == "-u") && (argv[4] == "-p") && (argv[6] == "-o")) {
+	if(argc == 6) {
+		if(std::string(argv[1]) == "bruteforce") {
+			if(std::string(argv[2]) == "-u") {
+				if(std::string(argv[4]) == "-p") {
+					if(std::string(argv[6]) == "-o") {
+						std::string userName = argv[3];
+						int password_length = atoi(argv[5]);
+						validatePasswordSize(password_length);
+						BruteForce b(userName, password_length);
+						std::string filename = DEFAULT_OUTPUT_FILE;
+						b.loadWriteFile(filename);
+					}
+				}
+			}
 		}
 	}
 
-	while((argv[1] == "bruteforce") && (argc = 7)) {
-		if((argv[2] = "-u") && (argv[4] == "-p") && (argv[6] == "-o")) {
-			std::string userName = argv[3];
-			int password_length = atoi(argv[5]);
-			validatePasswordSize(password_length);
-			BruteForce b(userName, password_length);
-			std::string filename = argv[7];
-			b.loadWriteFile(filename);
+
+	//while((argv[1] == "bruteforce") && (argc == 7)) {
+		//if((argv[2] == "-u") && (argv[4] == "-p") && (argv[6] == "-o")) {
+	if(argc == 7) {
+		if(std::string(argv[1]) == "bruteforce") {
+			if(std::string(argv[2]) == "-u") {
+				if(std::string(argv[4]) == "-p") {
+					if(std::string(argv[6]) == "-o") {
+						std::string userName = argv[3];
+						int password_length = atoi(argv[5]);
+						validatePasswordSize(password_length);
+						BruteForce b(userName, password_length);
+						std::string filename = argv[7];
+						b.loadWriteFile(filename);
+					}
+				}
+			}	
 		}
 	}
-	while((argv[1] == "dictionary") && (argc = 6)) {
-			if((argv[2] == "-g") && (argv[4] = "-t") && (argv[6] == "-d")) {
-				std::string givenHash = argv[3];
-				std::string hash_type = argv[5];
-				validateUppercaseString(hash_type);
-				//validateHashType(hash_type);
-				DictionaryAttack d(givenHash, hash_type);
-				std::string filename = DEFAULT_DICTIONARY;
-				d.loadDictionary(filename);
+
+	if(argc == 6) {
+		if(std::string(argv[1]) == "dictionary") {
+			if(std::string(argv[2]) == "-g") {
+				if(std::string(argv[4]) == "-t") {
+					if(std::string(argv[6]) == "-d") {
+						std::string givenHash = argv[3];
+						std::string hash_type = argv[5];
+						validateUppercaseString(hash_type);
+						//validateHashType(hash_type);
+						DictionaryAttack d(givenHash, hash_type);
+						std::string filename = DEFAULT_DICTIONARY;
+						d.loadDictionary(filename);
+					}
+				}
 			}
-	}
-	while((argv[1] == "dictionary") && (argc = 7)) {
-		if((argv[2] == "-g") && (argv[4] = "-t") && (argv[6] == "-c")) {
-			std::string givenHash = argv[3];
-			std::string hash_type = argv[5];
-			validateUppercaseString(hash_type);
-			//validateHashType(hash_type);
-			DictionaryAttack d(givenHash, hash_type);
-			std::string filename = argv[7];
-			d.loadDictionary(filename);
 		}
-	}
-	if(argc = 2) {
-		if(argv[1] == "-v") {
+	}	
+
+	//while((argv[1] == "dictionary") && (argc == 6)) {
+			//if((argv[2] == "-g") && (argv[4] == "-t") && (argv[6] == "-d")) {
+
+	if(argc == 7) {
+		if(std::string(argv[1]) == "dictionary") {
+			if(std::string(argv[2]) == "-g") {
+				if(std::string(argv[4]) == "-t") {
+					if(std::string(argv[6]) == "-c") {
+						std::string givenHash = argv[3];
+						std::string hash_type = argv[5];
+						validateUppercaseString(hash_type);
+						//validateHashType(hash_type);
+						DictionaryAttack d(givenHash, hash_type);
+						std::string filename = argv[7];
+						d.loadDictionary(filename);
+					}
+				}
+			}
+		}
+	}	
+	//while((argv[1] == "dictionary") && (argc == 7)) {
+		//if((argv[2] == "-g") && (argv[4] == "-t") && (argv[6] == "-c")) {
+			
+
+	if(argc == 2) {
+		if(string(argv[1]) == "-v") {
 			std::cout << version << std::endl;
 		}
-		else if(argv[1] == "-i") {
+		else if(std::string(argv[1]) == "-i") {
 			printInfo();
 		}
-		else if(argv[1] == "-h") {
+		else if(std::string(argv[1]) == "-h") {
 			printHelp();
 		}
-		else if(argv[1] == "-e") {
+		else if(std::string(argv[1]) == "-e") {
 			selection();
 		}
-		else if(argv[1] == "-q") {
+		else if(std::string(argv[1]) == "-q") {
 			questions();
 		}
 		else {
@@ -98,8 +134,8 @@ void UserInterface::printInfo() {
 	
 	//std::cout << "Filename: " << __FILE__ << std::endl;
 	std::cout << std::endl;
-	std::cout << termcolor::bold << termcolor::yellow << "  Date: " << __DATE__ << std::endl;
-	std::cout << termcolor::bold << termcolor::yellow << "  Time: " << __TIME__ << std::endl;
+	//std::cout << termcolor::bold << termcolor::yellow << "  Date: " << __DATE__ << std::endl;
+	//std::cout << termcolor::bold << termcolor::yellow << "  Time: " << __TIME__ << std::endl;
 	std::cout << std::endl;
 	std::cout << "     " << termcolor::blue << "***********************************************************************************" << std::endl;
 	std::cout << "     " << termcolor::blue << "*                          Crackle: A Password Cracker                            *" << std::endl;
@@ -131,24 +167,24 @@ void UserInterface::printHelp() {
 	//std::cout << "    Options:" <<std::endl;
 	std::cout << "The following options are associated with bruteforce attack:" << std::endl;
 	std::cout << std::endl;
-	std::cout << "        -u [username]         Username for bruteforce attack" << std::endl;
-	std::cout << "        -p [password length]  Length of password you want generate" << std::endl;
-	std::cout << "        -o [output file]      Output file for generated passwords (Specifying the output file is optional. Use -o to use default out file)" << std::endl;
+	std::cout << "        -u [username]     Username for bruteforce attack" << std::endl;
+	std::cout << "        -p [length]       Length of password you want generate" << std::endl;
+	std::cout << "        -o [output file]  Output file for generated passwords (Specifying the output file is optional. Use -o to use default out file)" << std::endl;
 	std::cout << std::endl;
 	std::cout << "The following options are associated with dictionary attack:" << std::endl;
 	std::cout << std::endl;
-	std::cout << "        -g [hash]             Hash for dictionary attack" << std::endl;
-	std::cout << "        -t [hash-type]        Type of hash" << std::endl;
-	std::cout << "        -d                    Use default dictionary file" << std::endl;
-	std::cout << "        -c [path to file]     Use custom dictionary file" << std::endl;
+	std::cout << "        -g [hash]         Hash for dictionary attack" << std::endl;
+	std::cout << "        -t [hash-type]    Type of hash" << std::endl;
+	std::cout << "        -d                Use default dictionary file" << std::endl;
+	std::cout << "        -c [path to file] Use custom dictionary file" << std::endl;
 	std::cout << std::endl;
 	std::cout << "Other options:" << std::endl;
 	std::cout << std::endl;
-	std::cout << "        -v                    Print program version" << std::endl;
-	std::cout << "        -i                    Print program information" << std::endl;
-	std::cout << "        -e                    Easy mode" << std::endl;
-	std::cout << "        -q                    Have questions or found bugs?" << std::endl;
-	std::cout << "        -h                    Produce help information" << std::endl;
+	std::cout << "        -v                Print program version" << std::endl;
+	std::cout << "        -i                Print program information" << std::endl;
+	std::cout << "        -e                Easy mode" << std::endl;
+	std::cout << "        -q                Have questions or found bugs?" << std::endl;
+	std::cout << "        -h                Produce help information" << std::endl;
 	std::cout << std::endl;
 	std::cout << "    Examples: " << std::endl;
 	std::cout << "        ./crackle bruteforce -u [username] -p [password length] -o" << std::endl;
@@ -158,7 +194,7 @@ void UserInterface::printHelp() {
 	std::cout << std::endl;
 }
 
-std::string UserInterface::validateUppercaseString(std::string hash_type) {
+void UserInterface::validateUppercaseString(std::string hash_type) {
 	std::transform(hash_type.begin(), hash_type.end(), hash_type.begin(), ::toupper);
 	validateHashType(hash_type);
 }
@@ -170,7 +206,6 @@ bool UserInterface::validateHashType(std::string &hash_type) {
 	else {
 		std::cout << "An invalid hash type has been entered. This program supports MD5, SHA1, SHA256 and SHA512 type hashes." << std::endl;
 		return false;
-		exit(0);
 	}
 }
 
@@ -178,7 +213,6 @@ bool UserInterface::validatePasswordSize(int password_length) {
 	if(password_length > maxPasswordSize) {
 		std::cout << "The maximum password length this program currently supports is 8 characters long" << std::endl;
 		return false;
-		exit(0);
 	}
 	else if(password_length <= maxPasswordSize) {
 		return true;

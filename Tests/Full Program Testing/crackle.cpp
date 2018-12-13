@@ -8,6 +8,8 @@
 #include "UserInterface.h"
 
 int main(int argc, char *argv[]) {
+	//debugging line
+	//std::cout << "There were " << argc << " arguments entered" << std::endl;
 	UserInterface u;
 	if(argc < 2) {
 		u.printHelp();

@@ -17,7 +17,7 @@ class UserInterface {
 		void printHelp();
 		void selection();
 		void menu();
-		std::string validateUppercaseString(std::string hash_type);
+		void validateUppercaseString(std::string hash_type);
 		bool validateHashType(std::string &hash_type);
 		bool validatePasswordSize(int password_length);
 		void questions();
