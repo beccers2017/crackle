@@ -27,9 +27,9 @@ void UserInterface::parse_cmd(int argc, char *argv[]) {
 	//std::string bruteforce;
 	//std::string dictionary;
 	
-	//while((argv[1] == "bruteforce") && (argc = 6)) {
+	//while((argv[1] == "bruteforce") && (argc == 6)) {
 		//if((argv[2] == "-u") && (argv[4] == "-p") && (argv[6] == "-o")) {
-	if(argc = 6) {
+	if(argc == 6) {
 		if(std::string(argv[1]) == "bruteforce") {
 			if(std::string(argv[2]) == "-u") {
 				if(std::string(argv[4]) == "-p") {
@@ -47,9 +47,9 @@ void UserInterface::parse_cmd(int argc, char *argv[]) {
 	}
 
 
-	//while((argv[1] == "bruteforce") && (argc = 7)) {
+	//while((argv[1] == "bruteforce") && (argc == 7)) {
 		//if((argv[2] == "-u") && (argv[4] == "-p") && (argv[6] == "-o")) {
-	if(argc = 7) {
+	if(argc == 7) {
 		if(std::string(argv[1]) == "bruteforce") {
 			if(std::string(argv[2]) == "-u") {
 				if(std::string(argv[4]) == "-p") {
@@ -66,7 +66,7 @@ void UserInterface::parse_cmd(int argc, char *argv[]) {
 		}
 	}
 
-	if(argc = 6) {
+	if(argc == 6) {
 		if(std::string(argv[1]) == "dictionary") {
 			if(std::string(argv[2]) == "-g") {
 				if(std::string(argv[4]) == "-t") {
@@ -84,10 +84,10 @@ void UserInterface::parse_cmd(int argc, char *argv[]) {
 		}
 	}	
 
-	//while((argv[1] == "dictionary") && (argc = 6)) {
-			//if((argv[2] == "-g") && (argv[4] = "-t") && (argv[6] == "-d")) {
+	//while((argv[1] == "dictionary") && (argc == 6)) {
+			//if((argv[2] == "-g") && (argv[4] == "-t") && (argv[6] == "-d")) {
 
-	if(argc = 7) {
+	if(argc == 7) {
 		if(std::string(argv[1]) == "dictionary") {
 			if(std::string(argv[2]) == "-g") {
 				if(std::string(argv[4]) == "-t") {
@@ -104,11 +104,11 @@ void UserInterface::parse_cmd(int argc, char *argv[]) {
 			}
 		}
 	}	
-	//while((argv[1] == "dictionary") && (argc = 7)) {
-		//if((argv[2] == "-g") && (argv[4] = "-t") && (argv[6] == "-c")) {
+	//while((argv[1] == "dictionary") && (argc == 7)) {
+		//if((argv[2] == "-g") && (argv[4] == "-t") && (argv[6] == "-c")) {
 			
 
-	if(argc = 2) {
+	if(argc == 2) {
 		if(string(argv[1]) == "-v") {
 			std::cout << version << std::endl;
 		}
