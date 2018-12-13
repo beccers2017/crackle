@@ -46,13 +46,14 @@ void BruteForce::launchBruteForceAttack(const std::string &passChars, int passwo
 			std::cout << next << std::endl;
 			launchBruteForceAttack(passChars, passwordLength, next, file);
 		}
+	std::cout << "This program was unable to find a match from any of the generated passwords" << std::endl;
 	}
 }
 
 bool BruteForce::loadWriteFile(std::string &filename) {
-	const std::string &passChars = "abcde";
+	//const std::string &passChars = "abcde";
 	int passwordLength = 5;
-	const std::string &current = "";
+	//const std::string &current = "";
 	
 	
 	std::ofstream file;

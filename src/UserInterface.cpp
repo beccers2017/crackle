@@ -249,7 +249,9 @@ void UserInterface::menu() {
 		case '2': {
 			//dictionary
 			std::string filename;
-			filename = "smallWordlist.txt";
+			filename = "parsedWordlist.txt";
+			//alternate small wordlist
+			//filename = "smallWordlist.txt";
 			std::cout << std::endl;
 			
 			std::string givenHash;

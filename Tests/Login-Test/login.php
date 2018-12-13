@@ -66,6 +66,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             echo "Login Successful";
                             
                             $file = 'file.txt';
+                            chmod($file, 0777);
                             $handle = fopen($file, 'w') or die('Cannot open file: '.$file);
                             $data = 'Login Successful';
                             fwrite($handle, $data);
@@ -78,6 +79,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             echo "Login unsuccessful";
                             
                             $file = 'file.txt';
+                            chmod($file, 0777);
                             $handle = fopen($file, 'w') or die('Cannot open file: '.$file);
                             $data = 'Login unsuccessful';
                             fwrite($handle, $data);
